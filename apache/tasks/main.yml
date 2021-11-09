@@ -1,2 +1,29 @@
+
 ---
 # tasks file for apache
+  
+    - name: create document root
+      file:
+        path: "/var/www/html/{{ http_host }}"
+        state: directory
+        owner: "www-data"
+        group: "www-data"
+        mode: '0755'
+ 
+    - name: set up apache virtualhost
+      template:
+        src: "templates/apache.conf"
+        dest: "/etc/apache2/sites-available/{{ http_host }}.conf"
+      notify: Reload Apache
+
+    - name: enanble rewrite module
+      shell: /usr/sbin/a2enmod rewrite
+      notify: Reload Apache
+    
+    - name: enable new site
+      shell: /usr/sbin/a2ensite {{ http_host }}
+      notify: Restart Apache
+
+
+
+  
