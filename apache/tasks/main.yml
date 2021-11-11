@@ -20,10 +20,20 @@
       shell: /usr/sbin/a2enmod rewrite
       notify: Reload Apache
     
+<<<<<<< HEAD
+=======
+    - name: enable 000-default
+      shell: /usr/sbin/a2ensite 000-default
+      notify: Restart Apache
+
+>>>>>>> modif final a2ensite default
     - name: enable new site
       shell: /usr/sbin/a2ensite {{ http_host }}
       notify: Restart Apache
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> modif final a2ensite default
   
