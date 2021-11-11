@@ -1,27 +1,13 @@
+
 ---
-# tasks file for wordpress
+
 - hosts: web
-  tasks:
-    
-    - name: Set ownership
-      file:
-        path: "/var/www/{{ http_host }}"
-        state: directory
-        recurse: yes
-        owner: www-data
-        group: www-data
-    - name: Download and unpack latest wordpress
-      unarchive:
-        src: https://wordpress.org/latest.tar.gz
-        dest: "/var/www/{{ http_host }}"
-        remote_src: yes
-        creates: "/var/www/{{ http_host }}/wordpress"
-    - name: Set permissions for directories
-      shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type d -exec chmod 750 {} \\;"
-    - name: Set permissions for files
-      shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type f -exec chmod 640 {} \\;"
-    - name: replace string on wp-config
-      replace:
-        path:
-        regexp:
-        replace:
+  become: true
+  roles:
+    - wordpress
+    - apache
+
+- hosts: bdd
+  become: true
+  roles:
+    - mariadb
