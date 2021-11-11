@@ -7,13 +7,25 @@
         name: "{{ mysql_db }}"
         state: present
         login_user: root
-        login_password: "rrrr"
+        login_password: "{{ mysql_root_password }}"
 
     - name: create mysql user for wordpress
       mysql_user:
         name: "{{ mysql_user }}"
         password: "{{ mysql_password }}"
+        append_privs: yes
         priv: "{{ mysql_db }}.*:ALL"
         state: present
         login_user: root
-        login_password: "rrrr"
+        login_password: "{{ mysql_root_password }}"
+
+    - name: create mysql user for wordpress (remote)
+      mysql_user:
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_password }}"
+        append_privs: yes
+        priv: "{{ mysql_db }}.*:ALL"
+        host: "%"
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
