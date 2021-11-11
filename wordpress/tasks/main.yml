@@ -1,3 +1,60 @@
+
 ---
 # tasks file for wordpress
+    
+    
+    - name: Download latest wordpress
+      unarchive:
+        src: https://wordpress.org/latest.tar.gz
+        dest: "/tmp"
+        remote_src: yes
+        creates: "/var/www/html/{{ http_host }}"
+     
+    - name: Set ownership
+      file:
+        path: "/var/www/html/{{ http_host }}"
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+
+    - name: Copy wordpress to {{ http_host }}
+      shell: "cp -r /tmp/wordpress/* /var/www/html/{{ http_host }}"
+
+    - name: Set permissions for directories
+      shell: "/usr/bin/find /var/www/html/{{ http_host }}/ -type d -exec chmod 755 {} \\;"
+   
+    - name: Set permissions for files
+      shell: "/usr/bin/find /var/www/html/{{ http_host }}/ -type f -exec chmod 755 {} \\;"
+
+    - name: Copy config
+      copy: 
+        src: "/var/www/html/{{ http_host }}/wp-config-sample.php" 
+        dest: "/var/www/html/{{ http_host }}/wp-config.php"
+        remote_src: yes        
+        mode: 0644
+
+    - name: Set up wp-config
+      ansible.builtin.replace:
+        path: /var/www/html/{{ http_host }}/wp-config.php
+        regexp: 'database_name_here'
+        replace: '{{ mysql_db }}'
+
+    - name: Set up wp-config     
+      ansible.builtin.replace:
+        path: /var/www/html/{{ http_host }}/wp-config.php
+        regexp: 'username_here'
+        replace: '{{ mysql_user }}'
+      
+    - name: Set up wp-config
+      ansible.builtin.replace:
+        path: /var/www/html/{{ http_host }}/wp-config.php
+        regexp: 'password_here'
+        replace: '{{ mysql_password }}'
+
+    - name: Set up wp-config      
+      ansible.builtin.replace:
+        path: /var/www/html/{{ http_host }}/wp-config.php
+        regexp: 'localhost'
+        replace: '{{ ip_srv_bdd }}'
 
