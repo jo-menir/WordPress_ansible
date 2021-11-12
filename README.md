@@ -25,7 +25,13 @@ The following roles are in this playbook.
 ## Usages 
 
 ### 1. Verify and modify the file inventaire.inv to match your infrastructure.
+```
+[web]
+front-srv ansible_host=192.168.0.2
 
+[bdd]
+back-srv ansible_host=192.168.0.3
+```
 ### 2. Execute the playbook with the python script.
 ```
 python3 ./nouveau_site.py.
