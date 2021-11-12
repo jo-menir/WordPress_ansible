@@ -38,14 +38,14 @@ python3 ./nouveau_site.py.
 ```
 ### 3. Answer script questions
 ```
--
--
--
--
--
--
+- what is the name of the http host? (Ex: site1)
+- what is the name of the database? (WordPress database)
+- what is the root password? (mariadb root password ; used when you typed the command mysql_secure_connection)
+- what is the username? (name of the WordPress user)
+- what is the password? (WordPress user password)
+- What is the ip address of the database server? (Ex: 192.168.0.3)
 ```
 ### 4. Open a web browser.
 ```
-Go to localhost/{{ host }}
+Go to localhost/{{ http host }}
 ```
