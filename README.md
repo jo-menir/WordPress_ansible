@@ -1,3 +1,7 @@
+# Why a WordPress Ansible Playbook ?
+
+WordPress is the most famous CMS, it is important and interesting to be able to simplify the configuration of sites and avoid errors during it.
+
 # WordPress Ansible Playbook
 
 This repository contains an ansible playbook launched with a python script to speed up and automate the creation and configuration of a WordPress site.
